@@ -1,4 +1,7 @@
-public class Persona {
+
+import java.io.Serializable;
+
+public class Persona implements Serializable {
     protected String nombre, apellido, fecha_nac, sexo;
     protected int edad;
 
