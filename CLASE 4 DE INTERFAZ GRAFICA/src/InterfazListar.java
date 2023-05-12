@@ -120,6 +120,11 @@ public class InterfazListar extends javax.swing.JFrame {
                 jComboBoxInstitucionMousePressed(evt);
             }
         });
+        jComboBoxInstitucion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxInstitucionActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("prueba");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -255,6 +260,56 @@ public class InterfazListar extends javax.swing.JFrame {
         
         System.out.println("evento en el combo box PRESIONADO");
     }//GEN-LAST:event_jComboBoxInstitucionMousePressed
+
+    private void jComboBoxInstitucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxInstitucionActionPerformed
+        // TODO add your handling code here:
+        System.out.println("hola que tal Osvalo");
+        String institucion = this.jComboBoxInstitucion.getSelectedItem().toString();
+        System.out.println("institucion, " + institucion);
+        tabla.setNumRows(0);
+                
+        String v[] = new String[6];
+        ObjectInputStream arch = null;
+        String nomArch = "Institucion.dat";
+        try {
+            boolean flag = false;
+            arch = new ObjectInputStream(new FileInputStream(nomArch));
+            while(true){
+                System.out.println("leendo datos");
+                // leendo los objetos
+                Institucion inst = (Institucion)arch.readObject();
+                Pila pilita = inst.getP();
+                if(inst.getNombre().equals(institucion)){
+                    while(!pilita.esVacia()){
+                        Empleado emp = (Empleado)pilita.eliminar();
+                        v[5] = emp.getCodigo() + "";
+                        v[0] = emp.getNombre();
+                        v[1] = emp.getApellido();
+                        v[2] = emp.getSexo();
+                        v[3] = emp.getEdad() + "";
+                        v[4] = emp.getSueldo() + "";
+
+
+                        // guardar al auxiliar
+                        tabla.addRow(v);
+                    }
+                }
+                
+                // vaicar al original
+                
+                
+//                tabla.addRow(v);
+                
+            }
+        } catch (Exception e) {
+        }finally{
+            try {
+                arch.close();
+            } catch (IOException ex) {
+                Logger.getLogger(InterfazListar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jComboBoxInstitucionActionPerformed
 
     /**
      * @param args the command line arguments
